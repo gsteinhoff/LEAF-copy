@@ -2,12 +2,12 @@
 const PRODUCT_NAME = 'VA Light Electronic Action Framework';
 const VERSION_NUMBER = '4.0.0';
 
-const DIRECTORY_HOST = 'HOSTNAME';
-const DIRECTORY_DB = 'DB_NAME';
-const DIRECTORY_USER = 'USERNAME';
-const DIRECTORY_PASS = 'PASSWORD';
+const DIRECTORY_HOST = 'mysql';
+const DIRECTORY_DB = 'leaf_users';
+const DIRECTORY_USER = 'dbportaluser';
+const DIRECTORY_PASS = 'dbportalpass';
 
-const LEAF_NEXUS_URL = 'https://www.example.com/'; // trailing slash required
+const LEAF_NEXUS_URL = 'https://localhost/LEAF_Nexus/'; // trailing slash required
 const HTTP_HOST = 'www.example.com';
 
 const AUTH_URL = 'example.com/auth';
