@@ -34,11 +34,11 @@ class Config
 
     public static $ERM_Sites = array('resource_management' => ''); // URL to ERM sites with trailing slash
 
-    public $dbHost = 'SERVER_HOSTNAME';
+    public $dbHost = 'mysql';
 
-    public $dbName = 'DATABASE_NAME';
+    public $dbName = 'leaf_users';
 
-    public $dbUser = 'DATABASE_USERNAME';
+    public $dbUser = 'tester';
 
-    public $dbPass = 'DATABASE_PASSWORD';
+    public $dbPass = 'tester';
 }
