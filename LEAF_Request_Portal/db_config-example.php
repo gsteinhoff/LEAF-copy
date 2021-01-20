@@ -17,13 +17,13 @@ ini_set('display_errors', 0); // Set to 1 to display errors
 
 class DB_Config
 {
-    public $dbHost = 'SERVER_HOSTNAME';
+    public $dbHost = 'mysql';
 
-    public $dbName = 'DATABASE_NAME';
+    public $dbName = 'leaf_users';
 
-    public $dbUser = 'DATABASE_USERNAME';
+    public $dbUser = 'tester';
 
-    public $dbPass = 'DATABASE_PASSWORD';
+    public $dbPass = 'tester';
 }
 
 class Config
@@ -40,7 +40,7 @@ class Config
 
     // Directory for user uploads
                                              // using backslashes (/), with trailing slash
-    public static $orgchartPath = '../orgchart'; // HTTP Path to orgchart with no trailing slash
+    public static $orgchartPath = '../LEAF_Nexus'; // HTTP Path to orgchart with no trailing slash
 
     public static $orgchartImportTags = array('resources_site_access'); // Import org chart groups if they match these tags
 
@@ -52,11 +52,11 @@ class Config
 
     public static $emailBCC = array();    // BCCed for every email
 
-    public $phonedbHost = 'phoneSERVER_HOSTNAME';
+    public $phonedbHost = 'mysql';
 
-    public $phonedbName = 'phoneDATABASE_NAME';
+    public $phonedbName = 'leaf_users';
 
-    public $phonedbUser = 'phoneDATABASE_USERNAME';
+    public $phonedbUser = 'tester';
 
-    public $phonedbPass = 'phoneDATABASE_PASSWORD';
+    public $phonedbPass = 'tester';
 }
