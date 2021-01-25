@@ -8,10 +8,10 @@ const DIRECTORY_USER = 'dbportaluser';
 const DIRECTORY_PASS = 'dbportalpass';
 
 const LEAF_NEXUS_URL = 'https://localhost/LEAF_Nexus/'; // trailing slash required
-const HTTP_HOST = 'localhost';
+const HTTP_HOST = 'www.example.com';
 
-const AUTH_URL = 'localhost/LEAF_Request_Portal/auth_domain';
+const AUTH_URL = 'example.com/auth';
 
-//const AUTH_TYPE = 'cookie';
+const AUTH_TYPE = 'cookie';
 
 const CIPHER_KEY = 'example-key';
