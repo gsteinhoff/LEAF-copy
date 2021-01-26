@@ -440,51 +440,53 @@ var printer = function() {
                                 horizontalStart = horizontalShift;
                             }
                             horizontalShift += 5;
-                            for (var i = 0; i < indicator.options.length; i++) {
-                                if ( (horizontalShift + doc.getTextWidth(indicator.options[i])) > maxWidth) {
-                                    verticalShift += 8;
-                                    horizontalShift = 15;
-                                }
-                                if (verticalShift >= height - 40) {
-                                    doc.rect(10, verticalStart, 190, height - 20 - verticalStart);
-                                    pageFooter(false);
-                                    doc.addPage();
-                                    verticalShift = 10;
-                                    verticalStart = verticalShift;
-                                    fitSize = (splitText.length - i) * lineSpacing;
-                                    doc.setFontSize(8);
-                                    doc.setFont("helvetica");
-                                    if (titleContinued.length > 190) {
-                                        splitTitleContinued = doc.splitTextToSize(titleContinued, 185);
-                                        for (var j = 0; j < splitTitleContinued.length; j++) {
-                                            verticalShift += 3;
-                                            doc.text(splitTitleContinued[j], 11, verticalShift);
-                                        }
-                                        verticalShift += 4;
-                                    } else {
-                                        doc.text(titleContinued, 11, verticalShift + 3);
+                            if (typeof (indicator.options) !== "undefined" && indicator.options !== null) {
+                                for (var i = 0; i < indicator.options.length; i++) {
+                                    if ( (horizontalShift + doc.getTextWidth(indicator.options[i])) > maxWidth) {
+                                        verticalShift += 8;
+                                        horizontalShift = 15;
                                     }
-                                    doc.setFontSize(12);
+                                    if (verticalShift >= height - 40) {
+                                        doc.rect(10, verticalStart, 190, height - 20 - verticalStart);
+                                        pageFooter(false);
+                                        doc.addPage();
+                                        verticalShift = 10;
+                                        verticalStart = verticalShift;
+                                        fitSize = (splitText.length - i) * lineSpacing;
+                                        doc.setFontSize(8);
+                                        doc.setFont("helvetica");
+                                        if (titleContinued.length > 190) {
+                                            splitTitleContinued = doc.splitTextToSize(titleContinued, 185);
+                                            for (var j = 0; j < splitTitleContinued.length; j++) {
+                                                verticalShift += 3;
+                                                doc.text(splitTitleContinued[j], 11, verticalShift);
+                                            }
+                                            verticalShift += 4;
+                                        } else {
+                                            doc.text(titleContinued, 11, verticalShift + 3);
+                                        }
+                                        doc.setFontSize(12);
+                                        doc.setFont("times");
+                                    }
+                                    if (horizontalShift > 160) {
+                                        subNewRow();
+                                        horizontalShift += 5;
+                                    }
+                                    doc.rect(horizontalShift, verticalShift + 6, 5, 5);
+                                    if (!blank && indicator.value.indexOf(indicator.options[i]) > -1) {
+                                        doc.text('x', horizontalShift + 1.5, verticalShift + 9.5);
+                                    }
+                                    sizeOfOption = indicator.options[i].length * 2.5;
                                     doc.setFont("times");
+                                    splitOption = doc.splitTextToSize(decodeHTMLEntities(indicator.options[i]), 170);
+                                    for (var j = 0; j < splitOption.length; j++) {
+                                        doc.text(splitOption[j], horizontalShift + 6, verticalShift + 10.5 + 8 * j);
+                                    }
+                                    verticalShift += 8 * (splitOption.length - 1);
+                                    doc.setFont("Helvetica");
+                                    horizontalShift += checkBoxShift;
+                                    sizeOfBox += sizeOfOption;
                                 }
-                                if (horizontalShift > 160) {
-                                    subNewRow();
-                                    horizontalShift += 5;
-                                }
-                                doc.rect(horizontalShift, verticalShift + 6, 5, 5);
-                                if (!blank && indicator.value.indexOf(indicator.options[i]) > -1) {
-                                    doc.text('x', horizontalShift + 1.5, verticalShift + 9.5);
-                                }
-                                sizeOfOption = indicator.options[i].length * 2.5;
-                                doc.setFont("times");
-                                splitOption = doc.splitTextToSize(decodeHTMLEntities(indicator.options[i]), 170);
-                                for (var j = 0; j < splitOption.length; j++) {
-                                    doc.text(splitOption[j], horizontalShift + 6, verticalShift + 10.5 + 8 * j);
-                                }
-                                verticalShift += 8 * (splitOption.length - 1);
-                                doc.setFont("Helvetica");
-                                horizontalShift += checkBoxShift;
-                                sizeOfBox += sizeOfOption;
                             }
                             if (verticalStart === verticalShift) {
                                 doc.rect(horizontalStart, verticalStart, maxWidth, 12);
