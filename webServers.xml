@@ -1,0 +1,9 @@
+<application>
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="aba4dfe8-2f50-47d9-8e9a-c00cae4224eb" name="LEAF" url="https://localhost/LEAF_Nexus">
+        <fileTransfer accessType="LOCAL" port="0" />
+      </webServer>
+    </option>
+  </component>
+</application>
