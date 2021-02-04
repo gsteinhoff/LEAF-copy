@@ -1,0 +1,98 @@
+version: "3.4"
+
+services:
+  php:
+      build:
+        context: ../
+        dockerfile: docker/php/Dockerfile
+        args:
+          - BUILD_UID=${BUILD_UID}
+      ports:
+        - 80:80
+        - 443:443
+      links:
+        - mysql
+      volumes:
+        - ../LEAF_Nexus:/var/www/html/LEAF_Nexus
+        - ../LEAF_Request_Portal:/var/www/html/LEAF_Request_Portal
+        - ../libs:/var/www/html/libs
+        - ../test:/var/www/html/test
+      networks:
+        code-network:
+          aliases:
+            - php
+      environment:
+        - REMOTE_USER=${REMOTE_USER}
+        - APACHE_RUN_USER=build_user
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8081:8080" # debug only; use reverse-proxy http://localhost/swagger/
+    restart: 'always'
+    volumes:
+      - ./swagger/nexus-swagger.json:/usr/share/nginx/html/apiapi/nexus-swagger.json
+      - ./swagger/portal-swagger.json:/usr/share/nginx/html/apiapi/portal-swagger.json
+    environment:
+      - "URLS=[{ url: \"./apiapi/nexus-swagger.json\", name: \"Nexus\"   },
+              { url: \"./apiapi/portal-swagger.json\", name: \"Portal\" },
+             ]"
+      - "BASE_URL=/swagger/"
+    networks:
+      code-network:
+        aliases:
+          - swagger
+  mysql:
+    build:
+      context: ../
+      dockerfile: docker/mysql/Dockerfile
+    expose:
+      - '3306'
+    ports:
+      - "3306:3306"
+    restart: 'always'
+    volumes:
+      - leaf-mysql-data:/var/lib/mysql
+    networks:
+      code-network:
+        aliases:
+          - mysql
+
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_HOST=${MYSQL_ROOT_HOST}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
+
+  smtp:
+    image: kurzdigital/fake-smtp # https://hub.docker.com/r/kurzdigital/fake-smtp/
+    expose:
+      - '2525'
+    ports:
+      - "2525:25" # smtp port
+      - "5080:5080" # web ui port
+    restart: 'always'
+    networks:
+      code-network:
+        aliases:
+          - smtp
+
+    environment:
+      - "SMTP_PORT=${SMTP_PORT}"
+      - "APP_USER=${APP_USER}" # ui login -- defaults to tester
+      - "APP_PASSWORD=${APP_PASSWORD}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+
+
+
+volumes:
+  leaf-mysql-data:
+  leaf-php-data:
+
+
+networks:
+  code-network:
+    driver: bridge
