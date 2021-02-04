@@ -7,6 +7,8 @@ libs/dynicons/cache/*.svg
 .buildpath
 libs/qrcode/cache/*.png
 LEAF_Nexus/globals.php
+LEAF_Nexus/config.php
+LEAF_Request_Portal/db_config.php
 LEAF_Request_Portal/globals.php
 LEAF_Nexus/UPLOADS
 LEAF_Request_Portal/UPLOADS
