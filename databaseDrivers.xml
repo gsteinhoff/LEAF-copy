@@ -45,7 +45,13 @@
       <option name="auto-sync" value="true" />
     </driver>
     <driver id="mariadb">
+      <artifact id="MariaDB Connector J" name="MariaDB Connector J" use="true" version="2.6.0" />
       <option name="auto-sync" value="true" />
+      <option name="auto-commit" value="true" />
+      <option name="format-sources-on-sync" value="true" />
+      <option name="send-app-info" value="true" />
+      <option name="source-loading" value="USER_SOURCES" />
+      <option name="schema-control" value="AUTOMATIC" />
     </driver>
     <driver id="mongo">
       <option name="auto-sync" value="true" />
