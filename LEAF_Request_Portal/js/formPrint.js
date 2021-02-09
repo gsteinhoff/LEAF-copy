@@ -666,58 +666,60 @@ var printer = function() {
                             verticalStart = verticalShift;
                             doc.setTextColor(0);
                             verticalShift += 4;
-                            for (var i = 0; i < indicator.options.length; i++) {
-                                if ( (horizontalShift + doc.getTextWidth(indicator.options[i])) > maxWidth) {
-                                    verticalShift += 8;
-                                    horizontalShift = 20;
-                                }
-                                if (verticalShift >= height - 40) {
-                                    doc.rect(10, verticalStart, 190, height - 20 - verticalStart);
-                                    doc.setTextColor(0);
-                                    doc.setFont("times");
-                                    pageFooter(false);
-                                    doc.addPage();
-                                    doc.setTextColor(255);
-                                    doc.setDrawColor(0);
-                                    doc.setFillColor(30, 70, 125);
-                                    verticalShift = 10;
-                                    verticalStart = 10;
-                                    splitTitle = doc.splitTextToSize(title, 38);
-                                    doc.setFont("helvetica");
-                                    doc.setFillColor(30, 70, 125);
-                                    if (title.length > 190) {
-                                        splitTitle = doc.splitTextToSize(title, 185);
-                                        doc.rect(10, verticalShift, 190, 8 * splitTitle.length + 4, 'FD');
+                            if (typeof (indicator.options) !== "undefined" && indicator.options !== null) {
+                                for (var i = 0; i < indicator.options.length; i++) {
+                                    if ((horizontalShift + doc.getTextWidth(indicator.options[i])) > maxWidth) {
+                                        verticalShift += 8;
+                                        horizontalShift = 20;
+                                    }
+                                    if (verticalShift >= height - 40) {
+                                        doc.rect(10, verticalStart, 190, height - 20 - verticalStart);
+                                        doc.setTextColor(0);
+                                        doc.setFont("times");
+                                        pageFooter(false);
+                                        doc.addPage();
+                                        doc.setTextColor(255);
+                                        doc.setDrawColor(0);
+                                        doc.setFillColor(30, 70, 125);
+                                        verticalShift = 10;
+                                        verticalStart = 10;
+                                        splitTitle = doc.splitTextToSize(title, 38);
+                                        doc.setFont("helvetica");
+                                        doc.setFillColor(30, 70, 125);
+                                        if (title.length > 190) {
+                                            splitTitle = doc.splitTextToSize(title, 185);
+                                            doc.rect(10, verticalShift, 190, 8 * splitTitle.length + 4, 'FD');
+                                            for (var j = 0; j < splitTitle.length; j++) {
+                                                verticalShift += 8;
+                                                doc.text(splitTitle[j], 11, verticalShift);
+                                            }
+                                            verticalShift += 4;
+                                        } else {
+                                            doc.rect(10, verticalShift, 190, 8, 'FD');
+                                            doc.text(title, 11, verticalShift + 6);
+                                        }
+                                        doc.setTextColor(255);
+                                        doc.setFillColor(30, 70, 125);
+                                        doc.setFillColor(255);
                                         for (var j = 0; j < splitTitle.length; j++) {
-                                            verticalShift += 8;
-                                            doc.text(splitTitle[j], 11, verticalShift);
+                                            doc.text(splitTitle[j], 11, verticalStart + 6 + 8 * j);
                                         }
                                         verticalShift += 4;
-                                    } else {
-                                        doc.rect(10, verticalShift, 190, 8, 'FD');
-                                        doc.text(title, 11, verticalShift + 6);
                                     }
-                                    doc.setTextColor(255);
-                                    doc.setFillColor(30, 70, 125);
-                                    doc.setFillColor(255);
-                                    for (var j = 0; j < splitTitle.length; j++) {
-                                        doc.text(splitTitle[j], 11, verticalStart + 6 + 8 * j);
+                                    doc.rect(horizontalShift - 5, verticalShift + 6, 5, 5);
+                                    doc.setTextColor(0);
+                                    doc.setFont("helvetica");
+                                    if (!blank && indicator.value.indexOf(indicator.options[i]) > -1) {
+                                        doc.text('x', horizontalShift - 3.5, verticalShift + 9.5);
                                     }
-                                    verticalShift += 4;
+                                    doc.setFont("times");
+                                    splitOption = doc.splitTextToSize(decodeHTMLEntities(indicator.options[i]), 170);
+                                    for (var j = 0; j < splitOption.length; j++) {
+                                        doc.text(splitOption[j], horizontalShift + 1, verticalShift + 10.5 + 8 * j);
+                                    }
+                                    verticalShift += 8 * (splitOption.length - 1);
+                                    horizontalShift += checkBoxShift;
                                 }
-                                doc.rect(horizontalShift - 5, verticalShift + 6, 5, 5);
-                                doc.setTextColor(0);
-                                doc.setFont("helvetica");
-                                if (!blank && indicator.value.indexOf(indicator.options[i]) > -1) {
-                                    doc.text('x', horizontalShift - 3.5, verticalShift + 9.5);
-                                }
-                                doc.setFont("times");
-                                splitOption = doc.splitTextToSize(decodeHTMLEntities(indicator.options[i]), 170);
-                                for (var j = 0; j < splitOption.length; j++) {
-                                    doc.text(splitOption[j], horizontalShift + 1, verticalShift + 10.5 + 8 * j);
-                                }
-                                verticalShift += 8 * (splitOption.length - 1);
-                                horizontalShift += checkBoxShift;
                             }
                             verticalShift += 16;
                             doc.rect(10, verticalStart, 190, verticalShift - verticalStart);
